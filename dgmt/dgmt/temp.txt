@@ -1,0 +1,2 @@
+/usr/bin/gcc -Wall -g -O3 -Wextra -Wpedantic -o test/wots params.c hash.c fips202.c hash_address.c randombytes.c wots.c utils.c imt.c smt.c xmss.c xmss_core.c xmss_commons.c test/wots.c -lcrypto
+Makefile:23: recipe for target 'test/wots' failed
