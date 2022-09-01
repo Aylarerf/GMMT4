@@ -69,13 +69,34 @@ int main()
     
     uint32_t    id=2;
     //printf("111111111111111111111\n\n");
+	clock_t start_keydis,end_keydis;
+	double cpu_time_used_keydis;
+	start_keydis=clock();
     key_distribute(&smt_params, imt_head, smtU_seed, smtL_seed, select_imt_node_seed, allocate_seed, pub_seed_imt,manager_key, id);
-    unsigned char		sm[2*(params.sig_bytes + params.pk_bytes) + XMSS_MLEN + 2*params.index_bytes + imt_tree_height*imt_node_len + params.n + AES_BLOCK_SIZE];
+   end_keydis=clock();
+	cpu_time_used_keydis=((double)(end-start))/CLOCKS_PER_SEC;
+	unsigned char		sm[2*(params.sig_bytes + params.pk_bytes) + XMSS_MLEN + 2*params.index_bytes + imt_tree_height*imt_node_len + params.n + AES_BLOCK_SIZE];
     unsigned char       m[XMSS_MLEN];
     randombytes(m, XMSS_MLEN);
+	clock_t start_sign,end_sign;
+	double cpu_time_used_sign;
+	start_sign=clock();
     id = sign_dgmtU(&smt_params, sm, m, id);
+	end_sign=clock();
+	clock_t start_verify,end_verify;
+	double cpu_time_used_verify;
+	start_verify=clock();
     verify_dgmtU(&params, &smt_params, sm, imt_root);
+	end_verify=clock();
+	clock_t start_open,end_open;
+	double cpu_time_used_open;
+	start_open=clock();
     open_dgmt(&smt_params, sm, manager_key);
+	end_open=clock();
+	printf(" the runninb time is %lf \n",cpu_time_used_keydis);
+	printf(" the runninb time is %lf \n",cpu_time_used_sign);
+	printf(" the runninb time is %lf \n",cpu_time_used_verify);
+	printf(" the runninb time is %lf \n",cpu_time_used_open);
     
     if (id)
         key_distribute(&smt_params, imt_head, smtU_seed, smtL_seed, select_imt_node_seed, allocate_seed, pub_seed_imt,manager_key, id-1);
