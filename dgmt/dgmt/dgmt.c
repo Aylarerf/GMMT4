@@ -26,7 +26,8 @@
 #include "params.h"
 #include "fips202.h"
 
-
+#define MAX_GROUP_MEMBER_GLOBAL (1<<11)
+uint64_t request_number[MAX_GROUP_MEMBER_GLOBAL];
 
 void create_user_filename(char filename[], uint32_t id){
     uint32_t    i,l;
